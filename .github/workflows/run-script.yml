@@ -1,0 +1,27 @@
+name: Run Microsoft Graph Python Script
+
+on: [push]
+
+jobs:
+  run-python-script:
+    runs-on: ubuntu-latest
+
+    env:
+      GRAPH_CLIENT_ID: ${{ secrets.GRAPH_CLIENT_ID }}
+      GRAPH_CLIENT_SECRET: ${{ secrets.GRAPH_CLIENT_SECRET }}
+      GRAPH_TENANT_ID: ${{ secrets.GRAPH_TENANT_ID }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Python Script
+        run: python graph_api_script.py
